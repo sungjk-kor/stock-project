@@ -1,0 +1,10 @@
+streamlit>=1.36
+pandas>=2.2
+numpy>=1.26
+plotly>=5.22
+statsmodels>=0.14
+scikit-learn>=1.5
+yfinance>=0.2
+fredapi>=0.5
+python-dotenv>=1.0
+ipykernel>=6.29
