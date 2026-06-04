@@ -826,21 +826,28 @@ class DeviationDashboard:
                 </div>
             </div>
 
-            <!-- 점수 산출 방식 설명 -->
-            <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 14px; margin-top: 16px;">
-                <h3 style="margin: 0 0 10px 0; font-size: 13px; font-weight: 600; color: #0369a1;">🔍 점수 산출 방식</h3>
-                <div style="font-size: 12px; color: #164e63; line-height: 1.6;">
-                    <strong>이탈점수 = {self.stats['current_score']:+.4f}</strong><br>
-                    ↓ 이 점수는 5개 지표(DXY, 10Y금리, NFCI, HY스프레드, VIX)를 표준화한 후,<br>
-                    &nbsp;&nbsp;평온강세 국면의 중심에서 얼마나 벗어났는지를 측정합니다.<br>
-                    <br>
-                    <strong>백분위 = {self.stats['current_pct']:.1f}%</strong><br>
-                    ↓ 역사 기준으로 현재가 하위 {self.stats['current_pct']:.1f}%에 위치함을 의미합니다.<br>
-                    &nbsp;&nbsp;(낮을수록 평온함, 높을수록 극단적)<br>
-                    <br>
-                    <strong>국면 판정: 🟢 평온강세</strong><br>
-                    ↓ 백분위 {self.stats['current_pct']:.1f}% &lt; 33% 기준으로 평온강세로 분류됨<br>
-                    &nbsp;&nbsp;(현재는 역사상 가장 평온한 시기 중 하나)
+            <!-- 점수 산출 방식 설명 (3단 배열) -->
+            <div style="margin-top: 16px;">
+                <h3 style="margin: 0 0 12px 0; font-size: 14px; font-weight: 600; color: #111827;">🔍 점수 산출 방식</h3>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                    <!-- 이탈점수 카드 -->
+                    <div style="padding: 12px; background: #dbeafe; border-left: 3px solid #0284c7; border-radius: 4px;">
+                        <div style="font-weight: 600; color: #0369a1; margin-bottom: 6px; font-size: 13px;">이탈 점수</div>
+                        <div style="font-size: 18px; font-weight: 700; color: #0c4a6e; margin-bottom: 6px;">{self.stats['current_score']:+.4f}</div>
+                        <div style="font-size: 11px; color: #164e63; line-height: 1.4;">5개 지표(DXY, 10Y금리, NFCI, HY스프레드, VIX)를 표준화한 후 평온강세에서의 이탈 정도를 측정</div>
+                    </div>
+                    <!-- 백분위 카드 -->
+                    <div style="padding: 12px; background: #fef3c7; border-left: 3px solid #f59e0b; border-radius: 4px;">
+                        <div style="font-weight: 600; color: #b45309; margin-bottom: 6px; font-size: 13px;">백분위</div>
+                        <div style="font-size: 18px; font-weight: 700; color: #92400e; margin-bottom: 6px;">{self.stats['current_pct']:.1f}%</div>
+                        <div style="font-size: 11px; color: #78350f; line-height: 1.4;">역사상 현재 위치 (낮을수록 평온함, 높을수록 극단적)</div>
+                    </div>
+                    <!-- 국면 판정 카드 -->
+                    <div style="padding: 12px; background: #dcfce7; border-left: 3px solid #22c55e; border-radius: 4px;">
+                        <div style="font-weight: 600; color: #166534; margin-bottom: 6px; font-size: 13px;">국면 판정</div>
+                        <div style="font-size: 18px; font-weight: 700; color: #15803d; margin-bottom: 6px;">🟢 평온강세</div>
+                        <div style="font-size: 11px; color: #365314; line-height: 1.4;">백분위 {self.stats['current_pct']:.1f}% &lt; 33% 기준으로 분류</div>
+                    </div>
                 </div>
             </div>
 
