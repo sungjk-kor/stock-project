@@ -1302,12 +1302,8 @@ class DeviationDashboard:
 
             // annotations: 극값 및 사분위수 라벨 (상단 배치)
             // Python에서 계산된 이벤트 정보 사용
-            const minEventLabel = stats.min_event_name
-                ? stats.min_event_name + '<br><small style="color: #059669;">(' + stats.min_event_date + ')</small>'
-                : '';
-            const maxEventLabel = stats.max_event_name
-                ? stats.max_event_name + '<br><small style="color: #991b1b;">(' + stats.max_event_date + ')</small>'
-                : '';
+            const minEventLabel = stats.min_event_name ? stats.min_event_name : '';
+            const maxEventLabel = stats.max_event_name ? stats.max_event_name : '';
 
             const annotations = [
                 {{
