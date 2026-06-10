@@ -25,7 +25,7 @@ SECTOR_ETFS: dict[str, str] = {
     "XLY": "Consumer Discretionary",
 }
 
-# ê·¸ë£¹2: í…Œë§ˆÂ·ì „ëµí˜• ETF (ì„±ì¥, ê¸°ìˆ , AI, ìƒëª…ê³µí•™, ë³€ë™ì„± ë“±)
+# ê·¸ë£¹2: ?…Œë§ˆÂ·ì „?µ?˜• ETF (?„±?¥, ê¸°ìˆ , AI, ?ƒëª…ê³µ?•™, ë³??™?„± ?“±)
 SECTOR_ETFS_GROUP2: dict[str, str] = {
     "CIBR": "Cybersecurity",
     "SOXX": "Semiconductors",
@@ -37,20 +37,15 @@ SECTOR_ETFS_GROUP2: dict[str, str] = {
     "ARKX": "Space Exploration",
     "ARKG": "Genomics",
     "MCHI": "China Tech",
-    "TQQQ": "NASDAQ 3x Leverage",
-    "SQQQ": "NASDAQ 3x Inverse",
-    "PSQ": "QQQ 3x Inverse",
-    "TMF": "20Y Bond 3x Leverage",
-    "VIXY": "VIX 4x Leverage",
     "USO": "Oil Prices",
 }
 
 EVENT_LABELS = {
-    "golden_cross": "ì£¼ê°€ ê³¨ë“œí¬ë¡œìŠ¤",
-    "dead_cross": "ì£¼ê°€ ë°ë“œí¬ë¡œìŠ¤",
-    "volume_spike": "ê±°ë˜ëŸ‰ ê¸‰ì¦",
-    "low_rebound_20": "ì €ì ëŒ€ë¹„ 20% ìƒìŠ¹",
-    "high_drawdown_20": "ê³ ì ëŒ€ë¹„ 20% í•˜ë½",
+    "golden_cross": "ì£¼ê?? ê³¨ë“œ?¬ë¡œìŠ¤",
+    "dead_cross": "ì£¼ê?? ?°?“œ?¬ë¡œìŠ¤",
+    "volume_spike": "ê±°ë˜?Ÿ‰ ê¸‰ì¦",
+    "low_rebound_20": "???? ???ë¹? 20% ?ƒ?Š¹",
+    "high_drawdown_20": "ê³ ì ???ë¹? 20% ?•˜?½",
 }
 
 
@@ -116,7 +111,7 @@ def collect_sector_etf_weekly(
     end: str | None = None,
     path: str | Path = SECTOR_ETF_DATA_PATH,
 ) -> pd.DataFrame:
-    # ê·¸ë£¹1ê³¼ ê·¸ë£¹2ì˜ ETFë¥¼ ëª¨ë‘ ìˆ˜ì§‘
+    # ê·¸ë£¹1ê³? ê·¸ë£¹2?˜ ETFë¥? ëª¨ë‘ ?ˆ˜ì§?
     all_etfs = {**SECTOR_ETFS, **SECTOR_ETFS_GROUP2}
     df = fetch_sector_etf_weekly(start=start, end=end, tickers=all_etfs)
     if not df.empty:
@@ -205,21 +200,21 @@ def _build_event_row(
     event = EVENT_LABELS[event_type]
 
     if event_type == "golden_cross":
-        detail = f"12ì£¼ ì´ë™í‰ê· ì´ 26ì£¼ ì´ë™í‰ê· ì„ ìƒí–¥ ëŒíŒŒí–ˆìŠµë‹ˆë‹¤."
+        detail = f"12ì£? ?´?™?‰ê· ì´ 26ì£? ?´?™?‰ê· ì„ ?ƒ?–¥ ?Œ?ŒŒ?–ˆ?Šµ?‹ˆ?‹¤."
     elif event_type == "dead_cross":
-        detail = f"12ì£¼ ì´ë™í‰ê· ì´ 26ì£¼ ì´ë™í‰ê· ì„ í•˜í–¥ ëŒíŒŒí–ˆìŠµë‹ˆë‹¤."
+        detail = f"12ì£? ?´?™?‰ê· ì´ 26ì£? ?´?™?‰ê· ì„ ?•˜?–¥ ?Œ?ŒŒ?–ˆ?Šµ?‹ˆ?‹¤."
     elif event_type == "volume_spike":
         avg_volume = float(row["volume_ma_12w"])
         multiple = volume / avg_volume if avg_volume else np.nan
-        detail = f"ì£¼ê°„ ê±°ë˜ëŸ‰ì´ 12ì£¼ í‰ê· ì˜ {multiple:.1f}ë°°ë¡œ ì¦ê°€í–ˆìŠµë‹ˆë‹¤."
+        detail = f"ì£¼ê°„ ê±°ë˜?Ÿ‰?´ 12ì£? ?‰ê· ì˜ {multiple:.1f}ë°°ë¡œ ì¦ê???–ˆ?Šµ?‹ˆ?‹¤."
     elif event_type == "low_rebound_20":
         low = float(row["rolling_low_52w"])
-        detail = f"52ì£¼ ì €ì ({low:,.2f}) ëŒ€ë¹„ 20% ìƒìŠ¹ì„ ì„ ëŒíŒŒí–ˆìŠµë‹ˆë‹¤."
+        detail = f"52ì£? ???? ({low:,.2f}) ???ë¹? 20% ?ƒ?Š¹?„ ?„ ?Œ?ŒŒ?–ˆ?Šµ?‹ˆ?‹¤."
     elif event_type == "high_drawdown_20":
         high = float(row["rolling_high_52w"])
-        detail = f"52ì£¼ ê³ ì ({high:,.2f}) ëŒ€ë¹„ 20% í•˜ë½ì„ ì„ ì´íƒˆí–ˆìŠµë‹ˆë‹¤."
+        detail = f"52ì£? ê³ ì ({high:,.2f}) ???ë¹? 20% ?•˜?½?„ ?„ ?´?ƒˆ?–ˆ?Šµ?‹ˆ?‹¤."
     else:
-        detail = "ì´ë²¤íŠ¸ê°€ ê°ì§€ë˜ì—ˆìŠµë‹ˆë‹¤."
+        detail = "?´ë²¤íŠ¸ê°? ê°ì???˜?—ˆ?Šµ?‹ˆ?‹¤."
 
     return {
         "date": row["date"],

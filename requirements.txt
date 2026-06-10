@@ -4,6 +4,7 @@ numpy>=1.26
 plotly>=5.22
 statsmodels>=0.14
 scikit-learn>=1.5
+pmdarima>=2.0
 yfinance>=0.2
 fredapi>=0.5
 python-dotenv>=1.0
