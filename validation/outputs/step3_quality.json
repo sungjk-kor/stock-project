@@ -1,0 +1,994 @@
+{
+  "python": "3.14.6",
+  "cutoff_end": "2026-10-02",
+  "fetch_start": "2026-05-01",
+  "v_numpy": "2.4.6",
+  "v_pandas": "3.0.3",
+  "v_yfinance": "1.4.0",
+  "v_fredapi": "0.5.2",
+  "fetch_seconds": 8.5,
+  "splice": [
+    {
+      "file": "market",
+      "old_rows": 6645,
+      "old_max_date": "2026-06-03",
+      "new_fetch_rows": 110,
+      "new_fetch_range": "2026-05-01 ~ 2026-10-05",
+      "columns_missing_in_new_fetch": [],
+      "columns_extra_in_new_fetch_ignored": [],
+      "overlap_rows": 24,
+      "revisions": [
+        {
+          "file": "market",
+          "column": "sp500",
+          "overlap_cells": 23,
+          "changed_cells": 0,
+          "max_abs_diff": 0.0,
+          "max_rel_diff": 0.0,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": ""
+        },
+        {
+          "file": "market",
+          "column": "sp500_volume",
+          "overlap_cells": 23,
+          "changed_cells": 1,
+          "max_abs_diff": 2339950000.0,
+          "max_rel_diff": 0.6854164286697657,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": "2026-06-03"
+        },
+        {
+          "file": "market",
+          "column": "nasdaq",
+          "overlap_cells": 23,
+          "changed_cells": 1,
+          "max_abs_diff": 0.00390625,
+          "max_rel_diff": 1.4546262788710587e-07,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": "2026-06-03"
+        },
+        {
+          "file": "market",
+          "column": "nasdaq_volume",
+          "overlap_cells": 23,
+          "changed_cells": 1,
+          "max_abs_diff": 947837000.0,
+          "max_rel_diff": 0.1139250030619605,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": "2026-06-03"
+        },
+        {
+          "file": "market",
+          "column": "dow",
+          "overlap_cells": 23,
+          "changed_cells": 0,
+          "max_abs_diff": 0.0,
+          "max_rel_diff": 0.0,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": ""
+        },
+        {
+          "file": "market",
+          "column": "dow_volume",
+          "overlap_cells": 23,
+          "changed_cells": 1,
+          "max_abs_diff": 2298.0,
+          "max_rel_diff": 4.202231586855287e-06,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": "2026-06-03"
+        },
+        {
+          "file": "market",
+          "column": "vix",
+          "overlap_cells": 24,
+          "changed_cells": 0,
+          "max_abs_diff": 1.7763568394002505e-15,
+          "max_rel_diff": 1.159501876491801e-16,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": ""
+        },
+        {
+          "file": "market",
+          "column": "vix_volume",
+          "overlap_cells": 24,
+          "changed_cells": 0,
+          "max_abs_diff": 0.0,
+          "max_rel_diff": NaN,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": ""
+        },
+        {
+          "file": "market",
+          "column": "xli",
+          "overlap_cells": 23,
+          "changed_cells": 23,
+          "max_abs_diff": 0.907012939453125,
+          "max_rel_diff": 0.005128180843660201,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": "2026-05-01"
+        },
+        {
+          "file": "market",
+          "column": "xli_volume",
+          "overlap_cells": 23,
+          "changed_cells": 1,
+          "max_abs_diff": 69566.0,
+          "max_rel_diff": 0.010183816974121341,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": "2026-06-03"
+        },
+        {
+          "file": "market",
+          "column": "sox",
+          "overlap_cells": 23,
+          "changed_cells": 1,
+          "max_abs_diff": 0.0029296875,
+          "max_rel_diff": 2.10512074832271e-07,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": "2026-06-03"
+        },
+        {
+          "file": "market",
+          "column": "sox_volume",
+          "overlap_cells": 23,
+          "changed_cells": 0,
+          "max_abs_diff": 0.0,
+          "max_rel_diff": NaN,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": ""
+        }
+      ],
+      "appended_rows": 86,
+      "new_max_date": "2026-10-05",
+      "last_obs_by_column": {
+        "sp500": "2026-10-02",
+        "sp500_volume": "2026-10-02",
+        "nasdaq": "2026-10-02",
+        "nasdaq_volume": "2026-10-02",
+        "dow": "2026-10-02",
+        "dow_volume": "2026-10-02",
+        "vix": "2026-10-05",
+        "vix_volume": "2026-10-05",
+        "xli": "2026-10-02",
+        "xli_volume": "2026-10-02",
+        "sox": "2026-10-02",
+        "sox_volume": "2026-10-02"
+      }
+    },
+    {
+      "file": "rates",
+      "old_rows": 6984,
+      "old_max_date": "2026-06-02",
+      "new_fetch_rows": 111,
+      "new_fetch_range": "2026-05-01 ~ 2026-10-01",
+      "columns_missing_in_new_fetch": [],
+      "columns_extra_in_new_fetch_ignored": [],
+      "overlap_rows": 23,
+      "revisions": [
+        {
+          "file": "rates",
+          "column": "fed_funds",
+          "overlap_cells": 1,
+          "changed_cells": 0,
+          "max_abs_diff": 0.0,
+          "max_rel_diff": 0.0,
+          "filled_later_cells": 1,
+          "missing_now_cells": 0,
+          "first_changed_date": ""
+        },
+        {
+          "file": "rates",
+          "column": "treasury_2y",
+          "overlap_cells": 22,
+          "changed_cells": 0,
+          "max_abs_diff": 0.0,
+          "max_rel_diff": 0.0,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": ""
+        },
+        {
+          "file": "rates",
+          "column": "treasury_10y",
+          "overlap_cells": 22,
+          "changed_cells": 0,
+          "max_abs_diff": 0.0,
+          "max_rel_diff": 0.0,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": ""
+        },
+        {
+          "file": "rates",
+          "column": "term_spread_10y_2y",
+          "overlap_cells": 22,
+          "changed_cells": 0,
+          "max_abs_diff": 5.551115123125783e-17,
+          "max_rel_diff": 1.3539305178355565e-16,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": ""
+        }
+      ],
+      "appended_rows": 88,
+      "new_max_date": "2026-10-01",
+      "last_obs_by_column": {
+        "fed_funds": "2026-09-01",
+        "treasury_2y": "2026-10-01",
+        "treasury_10y": "2026-10-01",
+        "term_spread_10y_2y": "2026-10-01"
+      }
+    },
+    {
+      "file": "macro",
+      "old_rows": 316,
+      "old_max_date": "2026-04-01",
+      "new_fetch_rows": 5,
+      "new_fetch_range": "2026-05-01 ~ 2026-09-01",
+      "columns_missing_in_new_fetch": [],
+      "columns_extra_in_new_fetch_ignored": [],
+      "overlap_rows": 0,
+      "revisions": [
+        {
+          "file": "macro",
+          "column": "cpi",
+          "overlap_cells": 0,
+          "changed_cells": 0,
+          "max_abs_diff": 0.0,
+          "max_rel_diff": 0.0,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": ""
+        },
+        {
+          "file": "macro",
+          "column": "core_cpi",
+          "overlap_cells": 0,
+          "changed_cells": 0,
+          "max_abs_diff": 0.0,
+          "max_rel_diff": 0.0,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": ""
+        },
+        {
+          "file": "macro",
+          "column": "unemployment",
+          "overlap_cells": 0,
+          "changed_cells": 0,
+          "max_abs_diff": 0.0,
+          "max_rel_diff": 0.0,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": ""
+        },
+        {
+          "file": "macro",
+          "column": "nonfarm_payroll",
+          "overlap_cells": 0,
+          "changed_cells": 0,
+          "max_abs_diff": 0.0,
+          "max_rel_diff": 0.0,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": ""
+        },
+        {
+          "file": "macro",
+          "column": "retail_sales",
+          "overlap_cells": 0,
+          "changed_cells": 0,
+          "max_abs_diff": 0.0,
+          "max_rel_diff": 0.0,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": ""
+        },
+        {
+          "file": "macro",
+          "column": "industrial_production",
+          "overlap_cells": 0,
+          "changed_cells": 0,
+          "max_abs_diff": 0.0,
+          "max_rel_diff": 0.0,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": ""
+        }
+      ],
+      "appended_rows": 5,
+      "new_max_date": "2026-09-01",
+      "last_obs_by_column": {
+        "cpi": "2026-08-01",
+        "core_cpi": "2026-08-01",
+        "unemployment": "2026-09-01",
+        "nonfarm_payroll": "2026-09-01",
+        "retail_sales": "2026-08-01",
+        "industrial_production": "2026-08-01"
+      }
+    },
+    {
+      "file": "liquidity",
+      "old_rows": 6985,
+      "old_max_date": "2026-06-03",
+      "new_fetch_rows": 113,
+      "new_fetch_range": "2026-05-01 ~ 2026-10-05",
+      "columns_missing_in_new_fetch": [],
+      "columns_extra_in_new_fetch_ignored": [],
+      "overlap_rows": 24,
+      "revisions": [
+        {
+          "file": "liquidity",
+          "column": "m2",
+          "overlap_cells": 0,
+          "changed_cells": 0,
+          "max_abs_diff": 0.0,
+          "max_rel_diff": 0.0,
+          "filled_later_cells": 2,
+          "missing_now_cells": 0,
+          "first_changed_date": ""
+        },
+        {
+          "file": "liquidity",
+          "column": "financial_conditions",
+          "overlap_cells": 5,
+          "changed_cells": 5,
+          "max_abs_diff": 0.015000000000000013,
+          "max_rel_diff": 0.030364372469635654,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": "2026-05-01"
+        },
+        {
+          "file": "liquidity",
+          "column": "nfci_leverage",
+          "overlap_cells": 5,
+          "changed_cells": 5,
+          "max_abs_diff": 0.15399999999999997,
+          "max_rel_diff": 0.369304556354916,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": "2026-05-01"
+        },
+        {
+          "file": "liquidity",
+          "column": "credit_spread",
+          "overlap_cells": 22,
+          "changed_cells": 0,
+          "max_abs_diff": 0.0,
+          "max_rel_diff": 0.0,
+          "filled_later_cells": 1,
+          "missing_now_cells": 0,
+          "first_changed_date": ""
+        },
+        {
+          "file": "liquidity",
+          "column": "dxy",
+          "overlap_cells": 23,
+          "changed_cells": 1,
+          "max_abs_diff": 0.09099578857421875,
+          "max_rel_diff": 0.0009150915218117016,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": "2026-06-03"
+        },
+        {
+          "file": "liquidity",
+          "column": "oil",
+          "overlap_cells": 23,
+          "changed_cells": 1,
+          "max_abs_diff": 1.1499938964843608,
+          "max_rel_diff": 0.012121786267427851,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": "2026-06-03"
+        },
+        {
+          "file": "liquidity",
+          "column": "gold",
+          "overlap_cells": 23,
+          "changed_cells": 22,
+          "max_abs_diff": 32.5,
+          "max_rel_diff": 0.0071264115776778865,
+          "filled_later_cells": 0,
+          "missing_now_cells": 0,
+          "first_changed_date": "2026-05-01"
+        }
+      ],
+      "appended_rows": 89,
+      "new_max_date": "2026-10-05",
+      "last_obs_by_column": {
+        "m2": "2026-08-01",
+        "financial_conditions": "2026-09-25",
+        "nfci_leverage": "2026-09-25",
+        "credit_spread": "2026-10-01",
+        "dxy": "2026-10-05",
+        "oil": "2026-10-05",
+        "gold": "2026-10-05"
+      }
+    }
+  ],
+  "prior_rows_identical_until": null,
+  "prior_mismatch_dates": {
+    "2026-06-05": [
+      "sp500",
+      "sp500_volume",
+      "nasdaq",
+      "nasdaq_volume",
+      "dow",
+      "dow_volume",
+      "vix",
+      "xli",
+      "xli_volume",
+      "sox",
+      "sp500_log_return",
+      "nasdaq_log_return",
+      "dow_log_return",
+      "vix_log_return",
+      "xli_log_return",
+      "sox_log_return",
+      "treasury_2y",
+      "treasury_10y",
+      "term_spread_10y_2y",
+      "cpi",
+      "core_cpi",
+      "unemployment",
+      "nonfarm_payroll",
+      "retail_sales",
+      "industrial_production",
+      "cpi_change",
+      "core_cpi_change",
+      "unemployment_change",
+      "nonfarm_payroll_change",
+      "retail_sales_change",
+      "industrial_production_change",
+      "financial_conditions",
+      "nfci_leverage",
+      "credit_spread",
+      "dxy",
+      "oil",
+      "gold",
+      "dxy_log_return",
+      "oil_log_return",
+      "gold_log_return"
+    ],
+    "2026-05-01": [
+      "cpi",
+      "core_cpi",
+      "nonfarm_payroll",
+      "retail_sales",
+      "industrial_production",
+      "cpi_change",
+      "core_cpi_change",
+      "nonfarm_payroll_change",
+      "retail_sales_change",
+      "industrial_production_change"
+    ],
+    "2026-05-08": [
+      "cpi",
+      "core_cpi",
+      "nonfarm_payroll",
+      "retail_sales",
+      "industrial_production",
+      "cpi_change",
+      "core_cpi_change",
+      "nonfarm_payroll_change",
+      "retail_sales_change",
+      "industrial_production_change"
+    ],
+    "2026-05-15": [
+      "cpi",
+      "core_cpi",
+      "nonfarm_payroll",
+      "retail_sales",
+      "industrial_production",
+      "cpi_change",
+      "core_cpi_change",
+      "nonfarm_payroll_change",
+      "retail_sales_change",
+      "industrial_production_change"
+    ],
+    "2026-05-22": [
+      "cpi",
+      "core_cpi",
+      "nonfarm_payroll",
+      "retail_sales",
+      "industrial_production",
+      "cpi_change",
+      "core_cpi_change",
+      "nonfarm_payroll_change",
+      "retail_sales_change",
+      "industrial_production_change"
+    ],
+    "2026-05-29": [
+      "cpi",
+      "core_cpi",
+      "nonfarm_payroll",
+      "retail_sales",
+      "industrial_production",
+      "cpi_change",
+      "core_cpi_change",
+      "nonfarm_payroll_change",
+      "retail_sales_change",
+      "industrial_production_change"
+    ],
+    "2026-04-10": [
+      "cpi_change",
+      "core_cpi_change",
+      "nonfarm_payroll_change",
+      "retail_sales_change",
+      "industrial_production_change"
+    ],
+    "2026-04-17": [
+      "cpi_change",
+      "core_cpi_change",
+      "nonfarm_payroll_change",
+      "retail_sales_change",
+      "industrial_production_change"
+    ],
+    "2026-04-24": [
+      "cpi_change",
+      "core_cpi_change",
+      "nonfarm_payroll_change",
+      "retail_sales_change",
+      "industrial_production_change"
+    ]
+  },
+  "row_20260605_changes": {
+    "sp500": {
+      "당시(06-03까지 수집)": 7553.68017578125,
+      "확장본(06-05 종가)": 7383.740234375
+    },
+    "sp500_volume": {
+      "당시(06-03까지 수집)": 3413910000.0,
+      "확장본(06-05 종가)": 5591290000.0
+    },
+    "nasdaq": {
+      "당시(06-03까지 수집)": 26853.9765625,
+      "확장본(06-05 종가)": 25709.4296875
+    },
+    "nasdaq_volume": {
+      "당시(06-03까지 수집)": 8319833000.0,
+      "확장본(06-05 종가)": 11550140000.0
+    },
+    "dow": {
+      "당시(06-03까지 수집)": 50687.0703125,
+      "확장본(06-05 종가)": 50866.78125
+    },
+    "dow_volume": {
+      "당시(06-03까지 수집)": 546852298.0,
+      "확장본(06-05 종가)": 638680000.0
+    },
+    "vix": {
+      "당시(06-03까지 수집)": 16.059999465942383,
+      "확장본(06-05 종가)": 21.510000228881836
+    },
+    "xli": {
+      "당시(06-03까지 수집)": 174.0500030517578,
+      "확장본(06-05 종가)": 173.28677368164062
+    },
+    "xli_volume": {
+      "당시(06-03까지 수집)": 6831034.0,
+      "확장본(06-05 종가)": 8893400.0
+    },
+    "sox": {
+      "당시(06-03까지 수집)": 13916.95703125,
+      "확장본(06-05 종가)": 12220.759765625
+    },
+    "sp500_log_return": {
+      "당시(06-03까지 수집)": -0.0034862379189881,
+      "확장본(06-05 종가)": -0.0262408058651608
+    },
+    "nasdaq_log_return": {
+      "당시(06-03까지 수집)": -0.0044083326731279,
+      "확장본(06-05 종가)": -0.0479644070330245
+    },
+    "dow_log_return": {
+      "당시(06-03까지 수집)": -0.0067910645706739,
+      "확장본(06-05 종가)": -0.0032518364207767
+    },
+    "vix_log_return": {
+      "당시(06-03까지 수집)": 0.0471725308723609,
+      "확장본(06-05 종가)": 0.3393588095280013
+    },
+    "xli_log_return": {
+      "당시(06-03까지 수집)": 0.0052998461971061,
+      "확장본(06-05 종가)": 0.0009050878550374
+    },
+    "sox_log_return": {
+      "당시(06-03까지 수집)": 0.0813701828465287,
+      "확장본(06-05 종가)": -0.0486017183283937
+    },
+    "treasury_2y": {
+      "당시(06-03까지 수집)": 4.05,
+      "확장본(06-05 종가)": 4.17
+    },
+    "treasury_10y": {
+      "당시(06-03까지 수집)": 4.46,
+      "확장본(06-05 종가)": 4.55
+    },
+    "term_spread_10y_2y": {
+      "당시(06-03까지 수집)": 0.4100000000000001,
+      "확장본(06-05 종가)": 0.3799999999999999
+    },
+    "cpi": {
+      "당시(06-03까지 수집)": 332.407,
+      "확장본(06-05 종가)": 332.568
+    },
+    "core_cpi": {
+      "당시(06-03까지 수집)": 335.423,
+      "확장본(06-05 종가)": 336.065
+    },
+    "unemployment": {
+      "당시(06-03까지 수집)": 4.3,
+      "확장본(06-05 종가)": 4.2
+    },
+    "nonfarm_payroll": {
+      "당시(06-03까지 수집)": 158736.0,
+      "확장본(06-05 종가)": 158892.0
+    },
+    "retail_sales": {
+      "당시(06-03까지 수집)": 757085.0,
+      "확장본(06-05 종가)": 732898.0
+    },
+    "industrial_production": {
+      "당시(06-03까지 수집)": 102.4963,
+      "확장본(06-05 종가)": 102.842
+    },
+    "cpi_change": {
+      "당시(06-03까지 수집)": 2.113999999999976,
+      "확장본(06-05 종가)": -1.4110000000000014
+    },
+    "core_cpi_change": {
+      "당시(06-03까지 수집)": 1.2579999999999814,
+      "확장본(06-05 종가)": -0.0559999999999831
+    },
+    "unemployment_change": {
+      "당시(06-03까지 수집)": 0.0,
+      "확장본(06-05 종가)": -0.0999999999999996
+    },
+    "nonfarm_payroll_change": {
+      "당시(06-03까지 수집)": 115.0,
+      "확장본(06-05 종가)": 31.0
+    },
+    "retail_sales_change": {
+      "당시(06-03까지 수집)": 3715.0,
+      "확장본(06-05 종가)": 1483.0
+    },
+    "industrial_production_change": {
+      "당시(06-03까지 수집)": 0.6903000000000077,
+      "확장본(06-05 종가)": 0.2023999999999972
+    },
+    "financial_conditions": {
+      "당시(06-03까지 수집)": -0.494,
+      "확장본(06-05 종가)": -0.509
+    },
+    "nfci_leverage": {
+      "당시(06-03까지 수집)": 0.417,
+      "확장본(06-05 종가)": 0.264
+    },
+    "credit_spread": {
+      "당시(06-03까지 수집)": 1.54,
+      "확장본(06-05 종가)": 1.51
+    },
+    "dxy": {
+      "당시(06-03까지 수집)": 99.43900299072266,
+      "확장본(06-05 종가)": 100.06999969482422
+    },
+    "oil": {
+      "당시(06-03까지 수집)": 94.87000274658205,
+      "확장본(06-05 종가)": 90.54000091552734
+    },
+    "gold": {
+      "당시(06-03까지 수집)": 4492.7001953125,
+      "확장본(06-05 종가)": 4365.2998046875
+    },
+    "dxy_log_return": {
+      "당시(06-03까지 수집)": 0.0053340381360662,
+      "확장본(06-05 종가)": 0.0116595552763305
+    },
+    "oil_log_return": {
+      "당시(06-03까지 수집)": 0.0824700433725729,
+      "확장본(06-05 종가)": 0.0357542331364477
+    },
+    "gold_log_return": {
+      "당시(06-03까지 수집)": -0.0149783658379423,
+      "확장본(06-05 종가)": -0.0437453959279281
+    }
+  },
+  "range_flags": [
+    {
+      "column": "treasury_2y",
+      "prev52_min": 3.38,
+      "prev52_max": 4.17,
+      "ext_min": 4.07,
+      "ext_max": 4.81
+    },
+    {
+      "column": "treasury_10y",
+      "prev52_min": 3.97,
+      "prev52_max": 4.59,
+      "ext_min": 4.38,
+      "ext_max": 5.24
+    },
+    {
+      "column": "m2",
+      "prev52_min": 21938.8,
+      "prev52_max": 22804.5,
+      "ext_min": 22804.5,
+      "ext_max": 23342.8
+    }
+  ],
+  "stale_columns": [
+    {
+      "column": "vix_volume",
+      "ext_distinct": 1
+    },
+    {
+      "column": "sox_volume",
+      "ext_distinct": 1
+    },
+    {
+      "column": "fed_funds",
+      "ext_distinct": 2
+    },
+    {
+      "column": "cpi",
+      "ext_distinct": 3
+    },
+    {
+      "column": "core_cpi",
+      "ext_distinct": 3
+    },
+    {
+      "column": "unemployment",
+      "ext_distinct": 2
+    },
+    {
+      "column": "nonfarm_payroll",
+      "ext_distinct": 4
+    },
+    {
+      "column": "retail_sales",
+      "ext_distinct": 3
+    },
+    {
+      "column": "industrial_production",
+      "ext_distinct": 3
+    },
+    {
+      "column": "cpi_change",
+      "ext_distinct": 3
+    },
+    {
+      "column": "core_cpi_change",
+      "ext_distinct": 3
+    },
+    {
+      "column": "unemployment_change",
+      "ext_distinct": 3
+    },
+    {
+      "column": "nonfarm_payroll_change",
+      "ext_distinct": 4
+    },
+    {
+      "column": "retail_sales_change",
+      "ext_distinct": 3
+    },
+    {
+      "column": "industrial_production_change",
+      "ext_distinct": 3
+    },
+    {
+      "column": "m2",
+      "ext_distinct": 3
+    },
+    {
+      "column": "fomc",
+      "ext_distinct": 1
+    },
+    {
+      "column": "cpi_release",
+      "ext_distinct": 1
+    },
+    {
+      "column": "employment_release",
+      "ext_distinct": 1
+    },
+    {
+      "column": "bigtech_earnings",
+      "ext_distinct": 1
+    }
+  ],
+  "last_obs": [
+    {
+      "file": "market",
+      "column": "sp500",
+      "last_obs": "2026-10-02",
+      "weeks_ffilled_after_last_obs": 0
+    },
+    {
+      "file": "market",
+      "column": "sp500_volume",
+      "last_obs": "2026-10-02",
+      "weeks_ffilled_after_last_obs": 0
+    },
+    {
+      "file": "market",
+      "column": "nasdaq",
+      "last_obs": "2026-10-02",
+      "weeks_ffilled_after_last_obs": 0
+    },
+    {
+      "file": "market",
+      "column": "nasdaq_volume",
+      "last_obs": "2026-10-02",
+      "weeks_ffilled_after_last_obs": 0
+    },
+    {
+      "file": "market",
+      "column": "dow",
+      "last_obs": "2026-10-02",
+      "weeks_ffilled_after_last_obs": 0
+    },
+    {
+      "file": "market",
+      "column": "dow_volume",
+      "last_obs": "2026-10-02",
+      "weeks_ffilled_after_last_obs": 0
+    },
+    {
+      "file": "market",
+      "column": "vix",
+      "last_obs": "2026-10-05",
+      "weeks_ffilled_after_last_obs": 0
+    },
+    {
+      "file": "market",
+      "column": "vix_volume",
+      "last_obs": "2026-10-05",
+      "weeks_ffilled_after_last_obs": 0
+    },
+    {
+      "file": "market",
+      "column": "xli",
+      "last_obs": "2026-10-02",
+      "weeks_ffilled_after_last_obs": 0
+    },
+    {
+      "file": "market",
+      "column": "xli_volume",
+      "last_obs": "2026-10-02",
+      "weeks_ffilled_after_last_obs": 0
+    },
+    {
+      "file": "market",
+      "column": "sox",
+      "last_obs": "2026-10-02",
+      "weeks_ffilled_after_last_obs": 0
+    },
+    {
+      "file": "market",
+      "column": "sox_volume",
+      "last_obs": "2026-10-02",
+      "weeks_ffilled_after_last_obs": 0
+    },
+    {
+      "file": "rates",
+      "column": "fed_funds",
+      "last_obs": "2026-09-01",
+      "weeks_ffilled_after_last_obs": 5
+    },
+    {
+      "file": "rates",
+      "column": "treasury_2y",
+      "last_obs": "2026-10-01",
+      "weeks_ffilled_after_last_obs": 1
+    },
+    {
+      "file": "rates",
+      "column": "treasury_10y",
+      "last_obs": "2026-10-01",
+      "weeks_ffilled_after_last_obs": 1
+    },
+    {
+      "file": "rates",
+      "column": "term_spread_10y_2y",
+      "last_obs": "2026-10-01",
+      "weeks_ffilled_after_last_obs": 1
+    },
+    {
+      "file": "macro",
+      "column": "cpi",
+      "last_obs": "2026-08-01",
+      "weeks_ffilled_after_last_obs": 9
+    },
+    {
+      "file": "macro",
+      "column": "core_cpi",
+      "last_obs": "2026-08-01",
+      "weeks_ffilled_after_last_obs": 9
+    },
+    {
+      "file": "macro",
+      "column": "unemployment",
+      "last_obs": "2026-09-01",
+      "weeks_ffilled_after_last_obs": 5
+    },
+    {
+      "file": "macro",
+      "column": "nonfarm_payroll",
+      "last_obs": "2026-09-01",
+      "weeks_ffilled_after_last_obs": 5
+    },
+    {
+      "file": "macro",
+      "column": "retail_sales",
+      "last_obs": "2026-08-01",
+      "weeks_ffilled_after_last_obs": 9
+    },
+    {
+      "file": "macro",
+      "column": "industrial_production",
+      "last_obs": "2026-08-01",
+      "weeks_ffilled_after_last_obs": 9
+    },
+    {
+      "file": "liquidity",
+      "column": "m2",
+      "last_obs": "2026-08-01",
+      "weeks_ffilled_after_last_obs": 9
+    },
+    {
+      "file": "liquidity",
+      "column": "financial_conditions",
+      "last_obs": "2026-09-25",
+      "weeks_ffilled_after_last_obs": 1
+    },
+    {
+      "file": "liquidity",
+      "column": "nfci_leverage",
+      "last_obs": "2026-09-25",
+      "weeks_ffilled_after_last_obs": 1
+    },
+    {
+      "file": "liquidity",
+      "column": "credit_spread",
+      "last_obs": "2026-10-01",
+      "weeks_ffilled_after_last_obs": 1
+    },
+    {
+      "file": "liquidity",
+      "column": "dxy",
+      "last_obs": "2026-10-05",
+      "weeks_ffilled_after_last_obs": 0
+    },
+    {
+      "file": "liquidity",
+      "column": "oil",
+      "last_obs": "2026-10-05",
+      "weeks_ffilled_after_last_obs": 0
+    },
+    {
+      "file": "liquidity",
+      "column": "gold",
+      "last_obs": "2026-10-05",
+      "weeks_ffilled_after_last_obs": 0
+    }
+  ],
+  "release_alignment_rows": 95
+}

@@ -11,6 +11,8 @@
 
 from __future__ import annotations
 
+import inspect
+
 import numpy as np
 import pandas as pd
 import streamlit as st
@@ -35,7 +37,13 @@ def fit_ms_ar_model(csv_path: str = "data/processed/final_dataset.csv", k_regime
 
     np.random.seed(42)
     model = MarkovRegression(endog, k_regimes=k_regimes, exog=exog, switching_variance=True)
-    result = model.fit(search_reps=20, disp=False)
+    # statsmodels 0.15 이상은 search_reps 시작값 난수를 np.random.seed 로 고정하지 못하고
+    # fit(rng=...) 로만 고정된다 (validation/outputs/검증_요약.md '원본 코드 문제' ①).
+    # 0.14.x 에는 rng 인자가 없으므로 시그니처를 보고 분기한다 (0.14.x 동작은 그대로).
+    if "rng" in inspect.signature(model.fit).parameters:
+        result = model.fit(search_reps=20, disp=False, rng=np.random.default_rng(42))
+    else:
+        result = model.fit(search_reps=20, disp=False)
 
     # ★ 파라미터는 절대 수동 인덱싱하지 않고 param_names로 라벨링해 추출
     param_dict = dict(zip(model.param_names, result.params))
@@ -166,3 +174,34 @@ def compute_agreement(merged: pd.DataFrame, max_lag: int = 6) -> dict:
         "n_only_prob_high": int(only_prob_high.sum()),
         "divergence": divergence,
     }
+
+
+def compute_transition_probabilities(ms_ar: dict, horizons: tuple[int, ...] = (1, 4, 13)) -> pd.DataFrame:
+    """필터링 P(약세) p_t 와 전이행렬 P 로 h주 후 약세확률·국면 전환확률 시계열을 만든다.
+
+    정의는 validation/step5_evaluate.py (A안: MS-AR 전이행렬 × 필터링 국면확률)와 같다.
+      행-확률 전이행렬  P = [[강→강, 강→약], [약→강, 약→약]]
+      h주 후 약세확률    q_h  = (1-p_t)·P^h[강,약] + p_t·P^h[약,약]
+      h주 후 전환확률    q'_h = (1-p_t)·(1-P^h[강,강]) + p_t·(1-P^h[약,약])
+    전이행렬은 전체 표본 적합값으로 시간 불변이므로, 시점별 변동은 전부 p_t 에서 온다.
+    p_t 는 filtered(실시간) 값이라 look-ahead 가 없다.
+
+    Returns:
+        DataFrame[date, prob_bear, regime, prob_bear_h{h}, prob_switch_h{h} ...]
+        regime 은 p_t > 0.5 이면 "약세", 아니면 "강세" (검증과 같은 0.5 임계).
+    """
+    P = np.array(
+        [
+            [ms_ar["bull_to_bull"], ms_ar["bull_to_bear"]],
+            [ms_ar["bear_to_bull"], ms_ar["bear_to_bear"]],
+        ],
+        dtype=float,
+    )
+    out = ms_ar["prob_bear_series"].dropna(subset=["prob_bear"]).copy()
+    p = out["prob_bear"].to_numpy(dtype=float)
+    out["regime"] = np.where(p > 0.5, "약세", "강세")
+    for h in horizons:
+        Ph = np.linalg.matrix_power(P, int(h))
+        out[f"prob_bear_h{h}"] = (1.0 - p) * Ph[0, 1] + p * Ph[1, 1]
+        out[f"prob_switch_h{h}"] = (1.0 - p) * (1.0 - Ph[0, 0]) + p * (1.0 - Ph[1, 1])
+    return out.reset_index(drop=True)

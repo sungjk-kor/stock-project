@@ -1,0 +1,18 @@
+date,event_type,intensity,memo
+1991-01-17,geopolitical,1.0,걸프전 'Desert Storm' 개시
+1994-02-04,fomc,1.0,Fed 금리인상 사이클 시작
+1997-10-27,crisis,1.0,아시아 외환위기 확산
+2000-03-24,market,1.0,S&P500 닷컴버블기 고점
+2001-09-17,market,1.0,9·11 이후 미 증시 재개장
+2008-09-15,crisis,1.0,Lehman Brothers 파산
+2011-08-05,crisis,1.0,S&P의 미국 신용등급 강등
+2015-08-24,geopolitical,1.0,중국 위안화 절하
+2019-01-04,fomc,1.0,Powell pivot (금리인하 신호)
+2020-03-16,crisis,1.0,코로나 패닉
+2020-11-09,market,1.0,Pfizer 백신 효과 발표
+2022-03-16,fomc,1.0,Fed 첫 금리인상
+2022-09-13,cpi_release,1.0,CPI 쇼크 (물가 충격)
+2023-03-10,crisis,1.0,Silicon Valley Bank 파산
+2024-08-05,geopolitical,1.0,미국 경기침체 우려·엔 캐리 트레이드 청산
+2024-09-18,fomc,1.0,Fed 첫 금리인하
+2025-04-03,geopolitical,1.0,Trump 관세 충격

@@ -315,6 +315,10 @@ def _render_market_regime(df: pd.DataFrame) -> None:
         _render_ms_ar_current_status(dd_ms.stats, ms_ar)
         st.divider()
 
+        # h주 후 국면 전환확률 (전이행렬 × 필터링 P(약세)) — KPI + 표 + 시계열
+        _render_transition_probabilities(ms_ar, dd_ms)
+        st.divider()
+
         # 히트 스트립 차트 (기간 선택·spike_mode 포함)
         # key 접두어를 "regime_" 로 구분 — "3) 교차검증" 화면의 key와 충돌 방지
         _render_ms_ar_overlay_chart_in_regime(merged, dd_ms)
@@ -325,6 +329,164 @@ def _render_market_regime(df: pd.DataFrame) -> None:
         st.error(f"❌ MS-AR 계산 중 오류: {e}")
         import traceback
         st.code(traceback.format_exc())
+
+
+def _macro_regime_labels(dd) -> pd.DataFrame:
+    """이탈 점수 모듈(DeviationDashboard)의 동결 KMeans로 각 주의 거시 군집 라벨과
+    비위기 기준 백분위를 붙인다. 라벨 규칙은 utils/similar_periods.py 와 동일
+    (평온강세 = VIX 최저 군집, 위험주의 = NFCI 최고 군집, 나머지 = 중간국면)."""
+    std_cols = [f"__std_{f}" for f in dd.config["features"]]
+    out = dd.df_valid[["date", "score", "crisis"]].copy()
+    clusters = dd.km.predict(dd.df_valid[std_cols].values)
+    out["macro_regime"] = [
+        "평온강세" if c == dd.peacetime_label else ("위험주의" if c == dd.danger_label else "중간국면")
+        for c in clusters
+    ]
+    # 백분위 = 비위기 점수 중 현재보다 낮은 비율 (DeviationDashboard.calculate_stats 의 current_pct 와 같은 정의)
+    nc_sorted = np.sort(dd.df_valid.loc[~dd.df_valid["crisis"], "score"].to_numpy(dtype=float))
+    out["score_pct"] = np.searchsorted(nc_sorted, out["score"].to_numpy(dtype=float), side="left") / len(nc_sorted) * 100.0
+    return out
+
+
+def _render_transition_probabilities(ms_ar: dict, dd) -> None:
+    """국면 전환확률: 전이행렬 P(시간 불변) × 필터링 P(약세) p_t → h주 후 약세확률·전환확률.
+
+    정의는 validation/step5_evaluate.py (A안)와 같고 계산은 utils/ms_ar_model.py::
+    compute_transition_probabilities 가 한다. 화면: 현재값 KPI → 최근 N주 표 → 시계열
+    (이탈 점수 / 확률, 2패널·x축 공유. 이중 y축은 쓰지 않는다).
+    """
+    from utils.ms_ar_model import compute_transition_probabilities
+
+    st.markdown("#### 🔁 국면 전환확률 — h주 후 약세·전환 확률")
+    st.markdown(
+        """
+        <div class="forecast-note" style="font-size: 13px; line-height: 1.7;">
+            <strong>정의</strong> — 현재 필터링 P(약세)를 p<sub>t</sub>, 적합된 주간 전이행렬을 P라 할 때<br>
+            · h주 후 약세확률 = (1−p<sub>t</sub>)·P<sup>h</sup>[강→약] + p<sub>t</sub>·P<sup>h</sup>[약→약]<br>
+            · h주 후 전환확률 = (1−p<sub>t</sub>)·(1−P<sup>h</sup>[강→강]) + p<sub>t</sub>·(1−P<sup>h</sup>[약→약])
+            &nbsp;→ 지금 강세면 h주 뒤 약세로, 지금 약세면 강세로 가 있을 확률<br>
+            전이행렬은 전체 표본 적합값으로 <strong>시간 불변</strong>이라, 시점별 변동은 전부 p<sub>t</sub>에서 옵니다.
+            2013~2026 걸어서 검증(<code>validation/outputs/검증_요약.md</code>, 매주 재적합)에서
+            '현재 국면 유지' 기준선 대비 오차 감소(skill)는 4주 0.13 · 13주 0.30,
+            '장기 평균 전이빈도' 대비는 4주 0.04 · 13주 0.09였습니다.
+            <strong>미래 수익률 예측이 아니며 투자권유가 아닙니다.</strong>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    horizons = (1, 4, 13)
+    tp = compute_transition_probabilities(ms_ar, horizons=horizons)
+    macro = _macro_regime_labels(dd)
+    table = pd.merge(tp, macro, on="date", how="inner").sort_values("date").reset_index(drop=True)
+    if table.empty:
+        st.warning("전환확률을 계산할 공통 날짜가 없습니다.")
+        return
+
+    cur = table.iloc[-1]
+    _render_kpis(
+        [
+            ("현재 P(약세) · MS-AR 국면", f"{cur['prob_bear'] * 100:.1f}%  ·  {cur['regime']}"),
+            ("1주 후 전환확률", f"{cur['prob_switch_h1'] * 100:.1f}%"),
+            ("4주 후 전환확률", f"{cur['prob_switch_h4'] * 100:.1f}%"),
+            ("13주 후 전환확률", f"{cur['prob_switch_h13'] * 100:.1f}%"),
+        ]
+    )
+    st.caption(
+        f"기준일 {pd.Timestamp(cur['date']).date()} (완결 주 금요일)  ·  "
+        f"h주 후 약세확률: 1주 {cur['prob_bear_h1'] * 100:.1f}% · 4주 {cur['prob_bear_h4'] * 100:.1f}% · "
+        f"13주 {cur['prob_bear_h13'] * 100:.1f}%  ·  "
+        f"주간 전이확률: 강→약 {ms_ar['bull_to_bear'] * 100:.2f}% / 약→강 {ms_ar['bear_to_bull'] * 100:.2f}%  ·  "
+        f"거시 군집(이탈 점수 KMeans): {cur['macro_regime']}"
+    )
+
+    n_weeks = st.radio(
+        "표시 기간",
+        [13, 26, 52],
+        horizontal=True,
+        index=0,
+        format_func=lambda w: {13: "최근 13주 (약 3개월)", 26: "최근 26주 (약 6개월)", 52: "최근 52주 (약 1년)"}[w],
+        key="regime_tp_n_weeks",
+    )
+    view = table.tail(int(n_weeks)).reset_index(drop=True)
+
+    # ── 표 (최신 주가 위) ──
+    show = pd.DataFrame(
+        {
+            "날짜": view["date"].dt.strftime("%Y-%m-%d"),
+            "MS-AR 국면": view["regime"],
+            "P(약세) %": view["prob_bear"] * 100,
+            "이탈 점수": view["score"],
+            "이탈 백분위 %": view["score_pct"],
+            "거시 군집": view["macro_regime"],
+            "전환확률 1주 %": view["prob_switch_h1"] * 100,
+            "전환확률 4주 %": view["prob_switch_h4"] * 100,
+            "전환확률 13주 %": view["prob_switch_h13"] * 100,
+        }
+    )
+    st.dataframe(
+        show.iloc[::-1],
+        use_container_width=True,
+        hide_index=True,
+        column_config={
+            "P(약세) %": st.column_config.NumberColumn(format="%.1f"),
+            "이탈 점수": st.column_config.NumberColumn(format="%.3f"),
+            "이탈 백분위 %": st.column_config.NumberColumn(format="%.0f"),
+            "전환확률 1주 %": st.column_config.NumberColumn(format="%.1f"),
+            "전환확률 4주 %": st.column_config.NumberColumn(format="%.1f"),
+            "전환확률 13주 %": st.column_config.NumberColumn(format="%.1f"),
+        },
+    )
+    st.download_button(
+        "표 CSV 내려받기",
+        show.to_csv(index=False).encode("utf-8-sig"),
+        file_name=f"transition_prob_recent_{int(n_weeks)}w.csv",
+        mime="text/csv",
+        key="regime_tp_download",
+    )
+
+    # ── 시계열 (2패널, x축 공유; 단위가 다른 두 값을 한 축에 겹치지 않는다) ──
+    fig = make_subplots(
+        rows=2, cols=1, shared_xaxes=True,
+        row_heights=[0.42, 0.58], vertical_spacing=0.08,
+        subplot_titles=(
+            "이탈 점수 (거시 5지표, 높을수록 스트레스)",
+            "확률: 현재 P(약세) · h주 후 전환확률",
+        ),
+    )
+    fig.add_trace(
+        go.Scatter(x=view["date"], y=view["score"], name="이탈 점수", mode="lines+markers",
+                   line=dict(color="#2563eb", width=2), marker=dict(size=6),
+                   hovertemplate="%{x|%Y-%m-%d}<br>이탈 점수 %{y:.3f}<extra></extra>"),
+        row=1, col=1,
+    )
+    for col, name, color in [
+        ("prob_bear", "현재 P(약세)", "#b91c1c"),
+        ("prob_switch_h4", "전환확률 4주 후", "#f97316"),
+        ("prob_switch_h13", "전환확률 13주 후", "#7c3aed"),
+    ]:
+        fig.add_trace(
+            go.Scatter(x=view["date"], y=view[col], name=name, mode="lines+markers",
+                       line=dict(color=color, width=2), marker=dict(size=6),
+                       hovertemplate="%{x|%Y-%m-%d}<br>" + name + " %{y:.1%}<extra></extra>"),
+            row=2, col=1,
+        )
+    fig.add_hline(y=0.5, line_dash="dot", line_color="gray", opacity=0.5, row=2, col=1,
+                  annotation_text="P(약세) 0.5 = 약세 판정선", annotation_position="top left",
+                  annotation_font_size=11, annotation_font_color="gray")
+    fig.update_yaxes(title_text="이탈 점수", row=1, col=1)
+    fig.update_yaxes(title_text="확률", tickformat=".0%", rangemode="tozero", row=2, col=1)
+    fig.update_layout(
+        height=600,
+        hovermode="x unified",
+        legend=dict(orientation="h", yanchor="bottom", y=1.04, xanchor="left", x=0),
+        margin=dict(t=80),
+    )
+    st.plotly_chart(fig, use_container_width=True, key="regime_tp_chart")
+    st.caption(
+        f"표시 범위: {view['date'].min().date()} ~ {view['date'].max().date()} ({len(view)}주)  ·  "
+        "P(약세)는 filtered 원값(지연 없음)  ·  전환확률은 같은 주의 p_t 에 전이행렬 거듭제곱을 곱한 값"
+    )
 
 
 def _render_ms_ar_overlay_chart_in_regime(merged: pd.DataFrame, dd) -> None:
@@ -714,8 +876,19 @@ def _render_ms_ar_methodology(ms_ar: dict) -> None:
     st.markdown(
         "- S&P500 **주간 로그수익률**에 2국면 Markov-Switching AR(1) 모델 적합 (`switching_variance=True`)\n"
         "- **약세 국면 = 평균이 더 낮은 국면**으로 식별 (라벨 스위칭에 안전하도록 평균 기준 정렬)\n"
-        "- 국소최적 회피를 위해 `search_reps=20` + 시드 고정(`seed=42`)으로 재현성 확보, 전체 표본(위기 포함)으로 적합\n"
+        "- 국소최적 회피를 위해 `search_reps=20` + 시드 고정(`seed=42`; statsmodels 0.15 이상은 `fit(rng=)`로 고정)으로 재현성 확보, 전체 표본(위기 포함)으로 적합\n"
         "- 산출: `utils/ms_ar_model.py::fit_ms_ar_model` (독립 분석 스크립트 `ms_ar_analysis.py`의 로직을 캐싱과 함께 재사용)"
+    )
+
+    st.markdown("##### 2-1) 국면 전환확률 (h주 후)")
+    st.markdown(
+        "- 필터링 P(약세) p_t 와 적합된 주간 전이행렬 P 로 계산: "
+        "h주 후 약세확률 = (1−p_t)·Pʰ[강→약] + p_t·Pʰ[약→약], "
+        "h주 후 전환확률 = (1−p_t)·(1−Pʰ[강→강]) + p_t·(1−Pʰ[약→약])\n"
+        "- 전이행렬은 전체 표본 적합값으로 **시간 불변** → 시점별 변동은 전부 p_t 에서 나옴. "
+        "이 구조 때문에 '장기 평균 전이빈도' 기준선을 크게 이기지 못함 (13주 skill 약 0.09)\n"
+        "- 검증: `validation/outputs/검증_요약.md` (2013-01~2026-10 매주 재적합, Brier·log loss·캘리브레이션, "
+        "엑셀 `전환확률_검증.xlsx` 수식 재계산). 산출: `utils/ms_ar_model.py::compute_transition_probabilities`"
     )
 
     conv = "수렴함 ✓" if ms_ar["converged"] else "⚠ 수렴 실패 — 해석에 주의 필요"

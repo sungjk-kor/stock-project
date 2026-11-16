@@ -1,0 +1,102 @@
+{
+  "tag": "orig",
+  "python": "3.14.6",
+  "versions": {
+    "numpy": "2.4.6",
+    "pandas": "3.0.3",
+    "scipy": "1.17.1",
+    "statsmodels": "0.14.6",
+    "sklearn": "1.8.0",
+    "streamlit": "1.57.0"
+  },
+  "rebuild": {
+    "rows": 1332,
+    "first": "2000-12-01",
+    "last": "2026-06-05",
+    "committed_rows": 1318,
+    "same_columns": true,
+    "dates_match_first_n": true,
+    "mismatch_cells_first_n": 0,
+    "mismatch_columns": {},
+    "build_seconds": 0.2
+  },
+  "msar": {
+    "params": {
+      "converged": true,
+      "log_likelihood": 3266.932882780502,
+      "bear_idx": 0,
+      "mean_bear": -0.004699679460583618,
+      "mean_bull": 0.0038080458164644333,
+      "var_bear": 0.001542884368647046,
+      "var_bull": 0.00022391679507547174,
+      "var_ratio": 6.890436102066452,
+      "bear_to_bear": 0.9276001740123132,
+      "bear_to_bull": 0.0723998259876868,
+      "bull_to_bear": 0.027050720536432316,
+      "bull_to_bull": 0.9729492794635677,
+      "duration_bear_weeks": 13.812187893518864,
+      "duration_bull_weeks": 36.96759199641965,
+      "current_prob_bear": 0.029171636255579676,
+      "current_date": "2026-06-05",
+      "fit_seconds": 3.0
+    },
+    "compare": {
+      "ref_rows": 1332,
+      "new_rows": 1332,
+      "rows_only_in_ref": 0,
+      "rows_only_in_new": 0,
+      "compared_rows": 1331,
+      "max_abs_diff": 4.773959005888173e-15,
+      "mean_abs_diff": 7.628899390497493e-16,
+      "n_gt_1e-6": 0,
+      "n_gt_1e-3": 0,
+      "n_gt_1e-2": 0,
+      "date_of_max_diff": "2003-01-17",
+      "corr": 0.9999999999999997,
+      "ref_last": {
+        "date": "2026-06-05",
+        "prob_bear": 0.0291716362555794
+      },
+      "new_last": {
+        "date": "2026-06-05",
+        "prob_bear": 0.029171636255579676
+      },
+      "n_ref_gt_0.5": 319,
+      "n_new_gt_0.5": 319,
+      "n_disagree_at_0.5": 0
+    }
+  },
+  "deviation": {
+    "ref_rows": 1319,
+    "new_rows": 1319,
+    "compared_rows": 1319,
+    "rows_only_in_ref": 0,
+    "rows_only_in_new": 0,
+    "max_abs_diff": 3.552713678800501e-15,
+    "mean_abs_diff": 1.9748283029157008e-16,
+    "n_gt_1e-6": 0,
+    "ref_last": {
+      "date": "2026-06-05",
+      "score": -0.1112780388501333
+    },
+    "new_last": {
+      "date": "2026-06-05",
+      "score": -0.11127803885013315
+    },
+    "stats_new": {
+      "current_score": -0.1113,
+      "current_date": "2026-06-05",
+      "current_pct": 28.8,
+      "current_peace": 0.975,
+      "max_score": 16.3695,
+      "max_date": "2008-11-21"
+    },
+    "peacetime_cluster": 1,
+    "danger_cluster": 3,
+    "seconds": 0.2
+  },
+  "ref_consistency_prob_bear": {
+    "rows": 1319,
+    "max_abs_diff": 0.0
+  }
+}
